@@ -1,17 +1,14 @@
 package com.it.app.service.impl;
 
 import com.it.app.component.LocalizedMessageSource;
-import com.it.app.model.Role;
 import com.it.app.model.User;
 import com.it.app.repository.UserRepository;
 import com.it.app.service.RoleService;
 import com.it.app.service.UserService;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 @Service

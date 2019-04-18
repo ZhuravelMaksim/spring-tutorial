@@ -1,10 +1,8 @@
 package com.it.app.service;
 
 import com.it.app.model.Role;
-import com.it.app.model.User;
 
 import java.util.List;
-import java.util.Locale;
 
 public interface RoleService {
 
