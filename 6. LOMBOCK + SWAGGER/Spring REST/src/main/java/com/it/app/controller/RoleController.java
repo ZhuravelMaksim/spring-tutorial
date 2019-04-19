@@ -47,18 +47,19 @@ public class RoleController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<RoleDto> save(@Valid @RequestBody RoleDto role) {
-        final RoleDto roleDto = mapper.map(roleService.save(mapper.map(role, Role.class)), RoleDto.class);
-        return new ResponseEntity<>(roleDto, HttpStatus.OK);
+    public ResponseEntity<RoleDto> save(@Valid @RequestBody RoleDto roleDto) {
+        roleDto.setId(null);
+        final RoleDto responseRoleDto = mapper.map(roleService.save(mapper.map(roleDto, Role.class)), RoleDto.class);
+        return new ResponseEntity<>(responseRoleDto, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<RoleDto> update(@Valid @RequestBody RoleDto role, @PathVariable Long id) {
-        if (!Objects.equals(id, role.getId())) {
+    public ResponseEntity<RoleDto> update(@Valid @RequestBody RoleDto roleDto, @PathVariable Long id) {
+        if (!Objects.equals(id, roleDto.getId())) {
             throw new RuntimeException(localizedMessageSource.getMessage("controller.role.unexpectedId", new Object[]{}));
         }
-        final RoleDto roleDto = mapper.map(roleService.update(mapper.map(role, Role.class)), RoleDto.class);
-        return new ResponseEntity<>(roleDto, HttpStatus.OK);
+        final RoleDto responseRoleDto = mapper.map(roleService.update(mapper.map(roleDto, Role.class)), RoleDto.class);
+        return new ResponseEntity<>(responseRoleDto, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

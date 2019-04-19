@@ -49,17 +49,18 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<UserResponseDto> save(@Valid @RequestBody UserRequestDto user) {
-        final UserResponseDto userResponseDto = mapper.map(userService.save(getUser(user)), UserResponseDto.class);
+    public ResponseEntity<UserResponseDto> save(@Valid @RequestBody UserRequestDto userRequestDto) {
+        userRequestDto.setId(null);
+        final UserResponseDto userResponseDto = mapper.map(userService.save(getUser(userRequestDto)), UserResponseDto.class);
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<UserResponseDto> update(@Valid @RequestBody UserRequestDto user, @PathVariable Long id) {
-        if (!Objects.equals(id, user.getId())) {
+    public ResponseEntity<UserResponseDto> update(@Valid @RequestBody UserRequestDto userRequestDto, @PathVariable Long id) {
+        if (!Objects.equals(id, userRequestDto.getId())) {
             throw new RuntimeException(localizedMessageSource.getMessage("controller.user.unexpectedId", new Object[]{}));
         }
-        final UserResponseDto userResponseDto = mapper.map(userService.update(getUser(user)), UserResponseDto.class);
+        final UserResponseDto userResponseDto = mapper.map(userService.update(getUser(userRequestDto)), UserResponseDto.class);
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 
@@ -71,7 +72,9 @@ public class UserController {
 
     private User getUser(UserRequestDto userRequestDto) {
         final User user = mapper.map(userRequestDto, User.class);
-        user.setRole(new Role(userRequestDto.getRoleId()));
+        final Role role = new Role();
+        role.setId(userRequestDto.getRoleId());
+        user.setRole(role);
         return user;
     }
 }

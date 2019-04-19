@@ -9,10 +9,8 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "USER_ROLE")
-@Getter
-@Setter
 @NoArgsConstructor
-@RequiredArgsConstructor
+@Data
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
