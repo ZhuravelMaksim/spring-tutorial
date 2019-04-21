@@ -2,7 +2,6 @@ package com.it.app.unit.service;
 
 import com.it.app.component.LocalizedMessageSource;
 import com.it.app.model.Role;
-import com.it.app.model.User;
 import com.it.app.repository.RoleRepository;
 import com.it.app.service.impl.RoleServiceImpl;
 import org.junit.jupiter.api.Test;
