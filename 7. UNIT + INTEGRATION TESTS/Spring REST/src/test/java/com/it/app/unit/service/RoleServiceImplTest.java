@@ -57,6 +57,7 @@ public class RoleServiceImplTest {
     public void testUpdate() {
         final Role role = new Role();
         role.setId(1L);
+        when(roleRepository.findById(1L)).thenReturn(Optional.of(role));
         when(roleRepository.saveAndFlush(role)).thenReturn(role);
         assertEquals(roleService.update(role), role);
     }
@@ -65,13 +66,17 @@ public class RoleServiceImplTest {
     public void testDelete() {
         final Role role = new Role();
         role.setId(1L);
+        when(roleRepository.findById(1L)).thenReturn(Optional.of(role));
         doNothing().when(roleRepository).delete(role);
         assertDoesNotThrow(() -> roleService.delete(role));
     }
 
     @Test
     public void testDeleteById() {
+        final Role role = new Role();
+        role.setId(1L);
         doNothing().when(roleRepository).deleteById(any(Long.class));
+        when(roleRepository.findById(1L)).thenReturn(Optional.of(role));
         assertDoesNotThrow(() -> roleService.deleteById(1L));
     }
 }

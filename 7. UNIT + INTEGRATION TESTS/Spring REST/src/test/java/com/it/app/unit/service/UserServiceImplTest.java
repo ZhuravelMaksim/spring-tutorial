@@ -69,6 +69,7 @@ public class UserServiceImplTest {
         final Role role = new Role(1L, "user");
         user.setRole(role);
         when(userRepository.saveAndFlush(user)).thenReturn(user);
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         when(roleService.findById(1L)).thenReturn(role);
         assertEquals(userService.update(user), user);
     }
@@ -78,11 +79,15 @@ public class UserServiceImplTest {
         final User user = new User();
         user.setId(1L);
         doNothing().when(userRepository).delete(user);
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         assertDoesNotThrow(() -> userService.delete(user));
     }
 
     @Test
     public void testDeleteById() {
+        final User user = new User();
+        user.setId(1L);
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
         doNothing().when(userRepository).deleteById(any(Long.class));
         assertDoesNotThrow(() -> userService.deleteById(1L));
     }
