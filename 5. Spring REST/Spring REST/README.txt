@@ -4,5 +4,3 @@
 4. Exception Handling
 5. DTO
 6. Validation
---7. Swagger
---8. Lombock
