@@ -4,11 +4,12 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
 @Table(name = "ROLE")
-public class Role {
+public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,9 +19,6 @@ public class Role {
     @NotEmpty(message = "{role.name.notEmpty}")
     @Size(min = 3, max = 50, message = "{role.name.size}")
     private String name;
-
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
 
     public Role() {
 
@@ -45,13 +43,5 @@ public class Role {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
     }
 }

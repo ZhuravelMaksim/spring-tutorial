@@ -79,8 +79,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Caching(evict = {
-            @CacheEvict(value = "findUserById", key = "#User.id"),
-            @CacheEvict(value = "findUserByName", key = "#User.name"),
+            @CacheEvict(value = "findUserById", key = "#user.id"),
+            @CacheEvict(value = "findUserByName", key = "#user.name"),
             @CacheEvict(value = "findAllUsers", allEntries = true)}
     )
     public void delete(User user) {
@@ -102,10 +102,10 @@ public class UserServiceImpl implements UserService {
     }
 
     private User saveAndFlush(User user) {
-        user.getRoles().forEach(User -> {
-            validate(User == null || User.getId() == null,
-                    localizedMessageSource.getMessage("error.user.Users.isNull", new Object[]{}));
-            User.setName(roleService.findById(User.getId()).getName());
+        user.getRoles().forEach(role -> {
+            validate(role == null || role.getId() == null,
+                    localizedMessageSource.getMessage("error.user.roles.isNull", new Object[]{}));
+            role.setName(roleService.findById(role.getId()).getName());
         });
         return userRepository.saveAndFlush(user);
     }
