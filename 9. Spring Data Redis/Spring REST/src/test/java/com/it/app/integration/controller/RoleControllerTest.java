@@ -46,7 +46,7 @@ public class RoleControllerTest {
         mockMvc.perform(get("/roles/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("user"))
+                .andExpect(jsonPath("$.name").value("ROLE_USER"))
                 .andReturn();
     }
 
@@ -64,8 +64,8 @@ public class RoleControllerTest {
         mockMvc.perform(get("/roles"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].name").value("user"))
-                .andExpect(jsonPath("$[1].name").value("admin"))
+                .andExpect(jsonPath("$[0].name").value("ROLE_USER"))
+                .andExpect(jsonPath("$[1].name").value("ROLE_ADMIN"))
                 .andReturn();
     }
 
@@ -80,7 +80,7 @@ public class RoleControllerTest {
 
     @Test
     public void testPutOneExistBadRequest() throws Exception {
-        mockMvc.perform(put("/roles/1").contentType(APPLICATION_JSON_UTF8).content("{\"id\":1,\"name\":\"admin\"}"))
+        mockMvc.perform(put("/roles/1").contentType(APPLICATION_JSON_UTF8).content("{\"id\":1,\"name\":\"ROLE_ADMIN\"}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
                 .andExpect(jsonPath("$.message").value("Role name is not unique!"))
@@ -89,7 +89,7 @@ public class RoleControllerTest {
 
     @Test
     public void testPutOneExist() throws Exception {
-        mockMvc.perform(put("/roles/2").contentType(APPLICATION_JSON_UTF8).content("{\"id\":2,\"name\":\"user\"}"))
+        mockMvc.perform(put("/roles/2").contentType(APPLICATION_JSON_UTF8).content("{\"id\":2,\"name\":\"ROLE_USER\"}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
                 .andExpect(jsonPath("$.message").value("Role name is not unique!"))
@@ -107,7 +107,7 @@ public class RoleControllerTest {
 
     @Test
     public void testSaveExistBadRequest() throws Exception {
-        mockMvc.perform(post("/roles").contentType(APPLICATION_JSON_UTF8).content("{\"name\":\"user\"}"))
+        mockMvc.perform(post("/roles").contentType(APPLICATION_JSON_UTF8).content("{\"name\":\"ROLE_ADMIN\"}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
                 .andExpect(jsonPath("$.message").value("Role name is not unique!"))

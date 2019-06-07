@@ -52,7 +52,7 @@ public class UserControllerTest {
 
     @Test
     public void testGetOneNotExist() throws Exception {
-        mockMvc.perform(get("/users/3"))
+        mockMvc.perform(get("/users/999"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
                 .andExpect(jsonPath("$.message").value("User doesn't exist!"))
@@ -71,7 +71,7 @@ public class UserControllerTest {
 
     @Test
     public void testPutOneBadRequest() throws Exception {
-        mockMvc.perform(put("/users/1").contentType(APPLICATION_JSON_UTF8).content("{\"id\":2,\"name\":\"user.simple1\",\"roleId\":1}"))
+        mockMvc.perform(put("/users/1").contentType(APPLICATION_JSON_UTF8).content("{\"id\":2,\"name\":\"user.simple1\",\"password\":\"1111\",\"roleIds\":[1,2]}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
                 .andExpect(jsonPath("$.message").value("Url param id is not equals to userId!"))
@@ -80,7 +80,7 @@ public class UserControllerTest {
 
     @Test
     public void testPutOneExistBadRequest() throws Exception {
-        mockMvc.perform(put("/users/1").contentType(APPLICATION_JSON_UTF8).content("{\"id\":1,\"name\":\"user.admin\"}"))
+        mockMvc.perform(put("/users/1").contentType(APPLICATION_JSON_UTF8).content("{\"id\":1,\"name\":\"user.admin\",\"password\":\"1111\"}"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.message").value("User's Role must not be null!;"))
@@ -89,7 +89,7 @@ public class UserControllerTest {
 
     @Test
     public void testPutOneExist() throws Exception {
-        mockMvc.perform(put("/users/1").contentType(APPLICATION_JSON_UTF8).content("{\"id\":1,\"name\":\"user.admin\",\"roleId\":1}"))
+        mockMvc.perform(put("/users/1").contentType(APPLICATION_JSON_UTF8).content("{\"id\":1,\"name\":\"user.admin\",\"password\":\"1111\",\"roleIds\":[1,2]}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
                 .andExpect(jsonPath("$.message").value("User name is not unique!"))
@@ -98,7 +98,7 @@ public class UserControllerTest {
 
     @Test
     public void testPutOneNotExist() throws Exception {
-        mockMvc.perform(put("/users/3").contentType(APPLICATION_JSON_UTF8).content("{\"id\":3,\"name\":\"user.test\",\"roleId\":1}"))
+        mockMvc.perform(put("/users/3").contentType(APPLICATION_JSON_UTF8).content("{\"id\":3,\"name\":\"user.test\",\"password\":\"1111\",\"roleIds\":[1,2]}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
                 .andExpect(jsonPath("$.message").value("User doesn't exist!"))
@@ -107,7 +107,7 @@ public class UserControllerTest {
 
     @Test
     public void testSaveBadRequest() throws Exception {
-        mockMvc.perform(post("/users").contentType(APPLICATION_JSON_UTF8).content("{\"name\":\"user.simple\"}"))
+        mockMvc.perform(post("/users").contentType(APPLICATION_JSON_UTF8).content("{\"name\":\"user.simple\",\"password\":\"1111\"}"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.message").value("User's Role must not be null!;"))
@@ -116,7 +116,7 @@ public class UserControllerTest {
 
     @Test
     public void testSaveExistBadRequest() throws Exception {
-        mockMvc.perform(post("/users").contentType(APPLICATION_JSON_UTF8).content("{\"name\":\"user.simple\",\"roleId\":1}"))
+        mockMvc.perform(post("/users").contentType(APPLICATION_JSON_UTF8).content("{\"name\":\"user.simple\",\"password\":\"1111\",\"roleIds\":[1,2]}"))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
                 .andExpect(jsonPath("$.message").value("User name is not unique!"))
@@ -125,7 +125,7 @@ public class UserControllerTest {
 
     @Test
     public void testSaveNotExist() throws Exception {
-        mockMvc.perform(post("/users").contentType(APPLICATION_JSON_UTF8).content("{\"name\":\"user.test\",\"roleId\":1}"))
+        mockMvc.perform(post("/users").contentType(APPLICATION_JSON_UTF8).content("{\"name\":\"user.test\",\"password\":\"1111\",\"roleIds\":[1,2]}"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("user.test"))

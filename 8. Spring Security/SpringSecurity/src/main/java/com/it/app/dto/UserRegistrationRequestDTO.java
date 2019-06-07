@@ -17,7 +17,7 @@ public class UserRegistrationRequestDTO {
     @Size(min = 3, max = 100, message = "{user.password.size}")
     private String password;
 
-    @NotNull(message = "{user.role.notNull}")
+    @NotNull(message = "{user.roles.notNull}")
     private Set<String> roles;
 
     public String getUsername() {
